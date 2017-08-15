@@ -42,6 +42,7 @@ public class MusicVisualizer : MonoBehaviour {
         GetSpectrumData();
         MakeFrequencyBands32();
         BandBuffer32();
+        CreateAudioBands32();
     }
 
 
@@ -77,7 +78,7 @@ public class MusicVisualizer : MonoBehaviour {
             }
 
             average /= count;
-            bands[i].frequency = average * 80;
+            bands[i].freqband = average * 80;
         }
         
     }
@@ -86,16 +87,30 @@ public class MusicVisualizer : MonoBehaviour {
     {
         for (int i = 0; i < 32; ++i)
         {
-            if (bands[i].frequency > bands[i].buffer)
+            if (bands[i].freqband > bands[i].bandBuffer)
             {
-                bands[i].buffer = bands[i].frequency;
+                bands[i].bandBuffer = bands[i].freqband;
                 bands[i].bufferDecrease = baseBufferDecrease;
             }
-            else if (bands[i].frequency < bands[i].buffer)
+            else if (bands[i].freqband < bands[i].bandBuffer)
             {
-                bands[i].buffer -= bands[i].bufferDecrease;
+                bands[i].bandBuffer -= bands[i].bufferDecrease;
                 bands[i].bufferDecrease *= bufferMultiplier;
             }
+        }
+    }
+
+    void CreateAudioBands32()
+    {
+        for (int i = 0; i < 32; i++)
+        {
+            Band b = bands[i];
+            if (b.freqband > b.freqBandHighest)
+            {
+                b.freqBandHighest = b.freqband;
+            }
+            b.audioBand = (b.freqband / b.freqBandHighest);
+            b.audioBandBuffer = (b.bandBuffer / b.freqBandHighest);
         }
     }
 }
@@ -103,12 +118,12 @@ public class MusicVisualizer : MonoBehaviour {
 [System.Serializable]
 public class Band
 {
-    public float frequency = 0, buffer = 0, bufferDecrease = 0;
+    public float freqband = 0, bandBuffer = 0, bufferDecrease = 0, audioBand = 0, audioBandBuffer = 0, freqBandHighest = 0;
 
     public Band(float frequency, float buffer, float bufferDecrease)
     {
-        this.frequency = frequency;
-        this.buffer = buffer;
+        this.freqband = frequency;
+        this.bandBuffer = buffer;
         this.bufferDecrease = bufferDecrease;
     }
 }

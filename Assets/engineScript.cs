@@ -51,7 +51,7 @@ public class engineScript : MonoBehaviour {
         {
             if (gears[i].maxVel > cc.totalVel && gears[i].minVel < cc.totalVel)
             {
-                print("new gear: " + (i+1));
+//                print("new gear: " + (i+1));
                 return i;
             }
         }

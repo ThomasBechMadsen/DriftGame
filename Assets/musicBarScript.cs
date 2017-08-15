@@ -18,6 +18,6 @@ public class musicBarScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        transform.localScale = new Vector3(transform.localScale.x, mv.bands[band].buffer * scaleMultiplier + minScale, transform.localScale.z);
+        transform.localScale = new Vector3(transform.localScale.x, mv.bands[band].bandBuffer * scaleMultiplier + minScale, transform.localScale.z);
 	}
 }

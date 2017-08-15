@@ -8,7 +8,7 @@ public class WheelRotation : MonoBehaviour {
     public Transform[] wheels = new Transform[4];
     public float smokeBeginVelocity;
 
-    void Update()
+    void FixedUpdate()
     {
         //Turn tires based on forwardsVelocity
         //http://hyperphysics.phy-astr.gsu.edu/hbase/rotwe.html

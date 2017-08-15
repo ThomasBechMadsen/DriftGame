@@ -13,6 +13,7 @@ public class CarController : MonoBehaviour
     public float driftFactor;
 
     Rigidbody rb;
+    MeshRenderer rearLightsRenderer;
 
     [HideInInspector]
     public float vAxis;
@@ -29,6 +30,7 @@ public class CarController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rearLightsRenderer = rearLights.GetComponent<MeshRenderer>();
     }
 
     void FixedUpdate()
@@ -40,7 +42,7 @@ public class CarController : MonoBehaviour
 
         sidewaysVel = sidewaysVector.magnitude;
         forwardVel = forwardsVector.magnitude;
-        rb.velocity = forwardsVector + sidewaysVector * driftFactor;
+        rb.velocity = forwardsVector + sidewaysVector * driftFactor; //<-- This causes slow falling, but also makes the car more reactive
         totalVel = rb.velocity.magnitude;
 
         if (vAxis > 0)
@@ -49,14 +51,12 @@ public class CarController : MonoBehaviour
         }
         if (vAxis < 0)
         {
-            rearLights.GetComponent<MeshRenderer>().enabled = true;
-            //if (rb.velocity.z > 0) {
-                rb.AddForce(transform.forward * -forwardForce);
-            //}
+            rearLightsRenderer.enabled = true;
+            rb.AddForce(transform.forward * -forwardForce);
         }
         else
         {
-            rearLights.GetComponent<MeshRenderer>().enabled = false;
+            rearLightsRenderer.enabled = false;
         }
       
         float tf = Mathf.Lerp(0, turnForce, rb.velocity.magnitude / 2);

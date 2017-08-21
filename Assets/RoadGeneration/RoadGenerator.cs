@@ -43,6 +43,12 @@ public class RoadGenerator : MonoBehaviour {
 
     void generatePiece()
     {
+        //Previous piece
+        instantiatedPieces[instantiatedPieces.Count - 1].transform.GetChild(2).gameObject.SetActive(true);
+        instantiatedPieces[instantiatedPieces.Count - 1].transform.GetChild(3).gameObject.SetActive(true);
+        instantiatedPieces[instantiatedPieces.Count - 1].transform.GetChild(4).gameObject.SetActive(true);
+
+        //New piece
         GameObject newPiece = Instantiate(roadPieces[Random.Range(0, roadPieces.Length)]);
         Transform lastPieceExit = instantiatedPieces[instantiatedPieces.Count - 1].transform.Find("ExitPoint");
         newPiece.transform.rotation = lastPieceExit.transform.rotation;
@@ -54,21 +60,6 @@ public class RoadGenerator : MonoBehaviour {
 
     public void HandleCollision(GameObject collider, GameObject collidedWith)
     {
-        /*int colliderIndex = instantiatedPieces.IndexOf(collider);
-        int collidedWithIndex = instantiatedPieces.IndexOf(collidedWith);
-        if (collidedWithIndex >= 0 && colliderIndex > collidedWithIndex) {
-            print("Destroying " + colliderIndex + ", lost to " + instantiatedPieces.IndexOf(collidedWith));
-            instantiatedPieces.RemoveAt(colliderIndex);
-            Destroy(collider);
-
-            failureCount++;
-            if (failureCount == 3)
-            {
-                failureCount = 0;
-                Destroy(instantiatedPieces[colliderIndex - 1]);
-                instantiatedPieces.RemoveAt(colliderIndex - 1);
-            }
-        }*/
 
         int colliderIndex = instantiatedPieces.IndexOf(collider);
         int collidedWithIndex = instantiatedPieces.IndexOf(collidedWith);
@@ -85,7 +76,7 @@ public class RoadGenerator : MonoBehaviour {
             {
                 if (failures[i] >= 3)
                 {
-                    print("Destroying parent");
+                    //print("Destroying parent");
                     failures[i - 1]++;
                     Destroy(instantiatedPieces[i]);
                     instantiatedPieces.RemoveAt(i);

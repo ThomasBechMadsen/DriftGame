@@ -44,9 +44,7 @@ public class RoadGenerator : MonoBehaviour {
     void generatePiece()
     {
         //Previous piece
-        instantiatedPieces[instantiatedPieces.Count - 1].transform.GetChild(2).gameObject.SetActive(true);
-        instantiatedPieces[instantiatedPieces.Count - 1].transform.GetChild(3).gameObject.SetActive(true);
-        instantiatedPieces[instantiatedPieces.Count - 1].transform.GetChild(4).gameObject.SetActive(true);
+        instantiatedPieces[instantiatedPieces.Count - 1].transform.Find("Mesh").gameObject.SetActive(true);
 
         //New piece
         GameObject newPiece = Instantiate(roadPieces[Random.Range(0, roadPieces.Length)]);

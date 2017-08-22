@@ -7,13 +7,12 @@ public class CarController : MonoBehaviour
     public float forwardForce;
     public float turnForce;
 
-    public GameObject rearLights;
-
     [Range(0, 1)]
     public float driftFactor;
 
     Rigidbody rb;
-    MeshRenderer rearLightsRenderer;
+    public Light leftRearLight;
+    public Light rightRearLight;
 
     [HideInInspector]
     public float vAxis;
@@ -30,7 +29,6 @@ public class CarController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rearLightsRenderer = rearLights.GetComponent<MeshRenderer>();
     }
 
     void FixedUpdate()
@@ -51,12 +49,14 @@ public class CarController : MonoBehaviour
         }
         if (vAxis < 0)
         {
-            rearLightsRenderer.enabled = true;
+            leftRearLight.enabled = true;
+            rightRearLight.enabled = true;
             rb.AddForce(transform.forward * -forwardForce);
         }
         else
         {
-            rearLightsRenderer.enabled = false;
+            leftRearLight.enabled = false;
+            rightRearLight.enabled = false;
         }
       
         float tf = Mathf.Lerp(0, turnForce, rb.velocity.magnitude / 2);

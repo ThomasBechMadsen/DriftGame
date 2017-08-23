@@ -13,6 +13,7 @@ public class RoadGenerator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        //Random.InitState(33); <-- Use seed
         roadPieces = Resources.LoadAll<GameObject>("RoadPieces");
         GameObject[] startPieces = Resources.LoadAll<GameObject>("StartPieces");
         instantiatedPieces.Add(Instantiate(startPieces[Random.Range(0, startPieces.Length - 1)]));

@@ -13,6 +13,7 @@ public class MusicVisualizer : MonoBehaviour {
     public FFTWindow fftWindow;
     public float baseBufferDecrease;
     public float bufferMultiplier;
+    public float audioProfile;
 
     float[] samples;
     public Band[] bands;
@@ -34,8 +35,17 @@ public class MusicVisualizer : MonoBehaviour {
             g.transform.localPosition = new Vector3(boxGenStartPointX + barSpacing * i, 0, 0);
             g.GetComponent<musicBarScript>().band = i;
         }
-        musicSource.time = 80;
+
+        applyAudioProfile(audioProfile);
+        //musicSource.time = 80;
 	}
+
+    void applyAudioProfile(float value)
+    {
+        foreach(Band b in bands){
+            b.freqBandHighest = value;
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
